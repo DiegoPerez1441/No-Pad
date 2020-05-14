@@ -9,30 +9,21 @@
       "notes": [
         {
           "title": "Test1",
+          "id": 0,
           "content": "This is a test!",
           "folder": "",
           "lastModified": "3/7/2020"
         },
         {
           "title": "To-Do",
+          "id": 1,
           "content": "Homework, Applications, Forms",
           "folder": "",
           "lastModified": "3/7/2020"
         },
         {
           "title": "Lorem Ipsum",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor nisl quis porttitor fringilla. Cras sed quam enim. Sed gravida ex ornare, varius tellus non, blandit ligula. Cras at lacinia lectus. Donec porta, dui non convallis maximus, nisl ex ullamcorper turpis, non varius nisl mauris in libero.",
-          "folder": "",
-          "lastModified": "3/7/2020"
-        },
-        {
-          "title": "Lorem Ipsum",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor nisl quis porttitor fringilla. Cras sed quam enim. Sed gravida ex ornare, varius tellus non, blandit ligula. Cras at lacinia lectus. Donec porta, dui non convallis maximus, nisl ex ullamcorper turpis, non varius nisl mauris in libero.",
-          "folder": "",
-          "lastModified": "3/7/2020"
-        },
-        {
-          "title": "Lorem Ipsum",
+          "id": 2,
           "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor nisl quis porttitor fringilla. Cras sed quam enim. Sed gravida ex ornare, varius tellus non, blandit ligula. Cras at lacinia lectus. Donec porta, dui non convallis maximus, nisl ex ullamcorper turpis, non varius nisl mauris in libero.",
           "folder": "",
           "lastModified": "3/7/2020"

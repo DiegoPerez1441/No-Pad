@@ -84,7 +84,7 @@ const LogIn = ({
           <button 
             type="submit" 
             onClick={handleButtonClick}
-            className={!isInputFilled ? "disabled" : ""}
+            className={!isInputFilled ? "disabled button_form" : "button_form"}
           >
             Sign In
           </button>

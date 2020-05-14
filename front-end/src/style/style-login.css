@@ -199,7 +199,8 @@ input:focus, textarea:focus {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-button {
+/* Form Buttons */
+.button_form {
   width: 30%;
   height: 40px;
   display: flex;
@@ -219,12 +220,12 @@ button {
   cursor: pointer;
 }
 
-button:not(.disabled):hover{
+.button_form:not(.disabled):hover{
   background-color: rgb(230, 230, 230);
   color: rgba(0, 0, 0, 0.5);
 }
 
-button.disabled {
+.button_form.disabled {
   color: rgb(117, 117, 117);
   cursor: default;
 }
