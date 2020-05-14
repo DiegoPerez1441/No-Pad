@@ -49,7 +49,7 @@ const DEFAULT_STATE = {
 }
 
 /*////////////////////////////////////////
-           Inernal Utilities
+           Internal Utilities
 ////////////////////////////////////////*/
 // The following functions will not be exported, but used for more specific "database-like" functions below
 // Think of them like replacements for the ability to perform basic database operations

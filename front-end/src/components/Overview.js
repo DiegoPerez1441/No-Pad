@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import NoteObj from './NoteObj'
 
-const Overview = ( { user, handleNoteObjSelection } ) => {
+const Overview = ( { user, notes } ) => {
 
   return(
     <div className="Overview">
@@ -13,11 +13,10 @@ const Overview = ( { user, handleNoteObjSelection } ) => {
         <h2>All Notes</h2>
       </div>
 
-
-      {user.notes.map(({ title, id, content, lastModified }, index) => {
-        return <NoteObj key={`note-object-${index}`} title={title} id={id} content={content} lastModified={lastModified} handleNoteObjSelection={handleNoteObjSelection}/>
+      {notes.map((note, index) => {
+        return <NoteObj key={`note-object-${index}`} note={note}/>
+        // console.log(`note-object-${index}`)
       })}
-      
 
     </div>
   )

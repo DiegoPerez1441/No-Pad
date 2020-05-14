@@ -1,13 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import portrait from '../img/portrait.jpg'
+import defaultProfilePic from '../img/defaultProfilePicture.png'
+import { findByLabelText } from '@testing-library/react';
+import { 
+  getAllNotesForUser,
+  insertNewNoteForUser
+} from '../utils/localStorageUtils'
 
-const SideNav = ( { user } ) => {
+const SideNav = ( { user, notes, setNotes } ) => {
+
+  const [newNoteMenuOpen, setNewNoteMenuOpen] = useState(false)
+
+  const openNewNoteMenu = () => {
+    setNewNoteMenuOpen(true)
+  }
+  const closeNewNoteMenu = () => {
+    setNewNoteMenuOpen(false)
+  }
+
+  const [noteName, setNoteName] = useState("")
+  const [isInputFilled, setIsInputFilled] = useState(false)
+
+  const handleNoteNameChange = (e) => {
+    const newNoteName = e.target.value
+
+    setNoteName(newNoteName)
+  }
+
+  useEffect(() => {
+    if(noteName === ""){
+      setIsInputFilled(false)
+    } else {
+      setIsInputFilled(true)
+    }
+  }, [noteName, setIsInputFilled])
+
+  const handleButtonClick = useCallback((e) => {
+    e.preventDefault();
+    if(isInputFilled){
+      insertNewNoteForUser(user, noteName, "")
+      setNotes(getAllNotesForUser(user))
+      closeNewNoteMenu()
+    }
+  }, [user, noteName, setNotes, isInputFilled])
   
   return(
     <aside className="sidenav">
       <div className="user">
-        <img src={portrait} alt="Portrait of me" />
+        <img src={defaultProfilePic} alt="Portrait of me" />
         <div className="user-text">
           <span id="name">{user.name}</span>
           <span id="email">{user.email}</span>
@@ -24,6 +64,9 @@ const SideNav = ( { user } ) => {
           <li><span className="fa-li"><i className="fas fa-folder"></i></span>Folders</li>
           <li><span className="fa-li"><i className="far fa-square"></i></span>Shared with Me</li>
         </ul> --> */}
+
+        <h1 id="NewNote" onClick={openNewNoteMenu}><span><FontAwesomeIcon id="NewNoteIcon" icon={['fas', 'plus-square']} className="sidenav-icon"/>New Note</span></h1>
+
         <ul className="QuickAccess_list fa-ul">
           <li><span className="fa-li"><i className=""></i></span><FontAwesomeIcon icon={['fas', 'file-alt']} className="sidenav-icon"/>All Notes</li>
           <li><span className="fa-li"><FontAwesomeIcon icon={['fas', 'caret-right']} className="sidenav-icon"/></span><FontAwesomeIcon icon={['fas', 'star']} className="sidenav-icon"/>Important</li>
@@ -47,6 +90,32 @@ const SideNav = ( { user } ) => {
           <li><FontAwesomeIcon icon={['fas', 'cog']} className="sidenav-icon"/>Settings</li>
         </ul>
       </div>
+
+      <div className="modal" id="newNoteModal" style={newNoteMenuOpen ? {display: "flex"} : {display: "none"}}>
+        <div className="modal-content">
+          <h1>New Note Setup</h1>
+
+          <form className="newNoteForm">
+            <label htmlFor="noteName">Note Name</label>
+            <input type="text" id="noteName" name="noteName" value={noteName} onChange={handleNoteNameChange}/>
+
+            <button 
+              type="submit"
+              onClick={handleButtonClick}
+              className={!isInputFilled ? "disabled button_form" : "button_form"}>
+              Create Note
+            </button>
+            <button 
+              type="button"
+              onClick={closeNewNoteMenu}
+              id="cancelNewNote"
+              className={"button_form"}>
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+
     </aside>
   )
 

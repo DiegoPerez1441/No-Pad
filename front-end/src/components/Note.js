@@ -7,7 +7,7 @@ const Note = ( {user, noteId} ) => {
   
   return(
     <div className="Note">
-      <p>{noteId}</p>
+      {/* <p>{noteId}</p> */}
     </div>
   )
   

@@ -1,15 +1,11 @@
 import React from 'react';
 
-const NoteObj = ({ 
-  title, id, content, lastModified, handleNoteObjSelection 
-}) => (
+const NoteObj = ({ note }) => (
 
-  <div className="NoteObj" onClick={event => {
-    handleNoteObjSelection(id)
-  }}>
-    <h2>{title}</h2>
-    <p>{content}</p>
-    <h6>{lastModified}</h6>
+  <div className="NoteObj">
+    <h2>{note.title}</h2>
+    <p>{note.content}</p>
+    <h6>{note.lastModified}</h6>
 
     {/* <button
     type="submit"
