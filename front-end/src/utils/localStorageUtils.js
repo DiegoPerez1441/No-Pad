@@ -159,3 +159,8 @@ export const updateNoteForUser = (updatedNote) => {
 
   setPartialLocalState({ [STATE_NOTES_KEY]: newNotes })
 }
+
+export const deleteNoteForUser = () => {
+
+  setPartialLocalState({ [STATE_NOTES_KEY]: newNotes })
+}
