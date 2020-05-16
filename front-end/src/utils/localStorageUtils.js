@@ -162,11 +162,7 @@ export const updateNoteForUser = (updatedNote) => {
 
 export const deleteNoteForUser = (deletedNote) => {
 
-  const newNotes = getAllNotes().filter(existingNote => {
-    if(existingNote.id !== deletedNote.id){
-      return existingNote
-    }
-  })
+  const newNotes = getAllNotes().filter(existingNote => existingNote.id !== deletedNote.id)
 
   setPartialLocalState({ [STATE_NOTES_KEY]: newNotes })
 }
