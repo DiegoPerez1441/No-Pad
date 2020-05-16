@@ -19,18 +19,18 @@ const NoteObj = ({ note, setNote, fetchLatestNotes }) => {
   }
 
   return(
-    <div className="NoteObj" onClick={selectNote}>
-      <h2>{note.title}</h2>
-      <p>{note.content}</p>
-      <h6>{note.lastModified}</h6>
-
+    <div className="NoteObj-container">
+      <div className="NoteObj" onClick={selectNote}>
+        <h2>{note.title}</h2>
+        <p>{note.content}</p>
+        <h6>{note.lastModified}</h6>
+      </div>
       <div className="NoteObjInfo" onClick={deleteNote}>
         <FontAwesomeIcon icon={['fas', 'trash']} className="sidenav-icon"/>
         {/* <span>•</span>
         <span>•</span>
         <span>•</span> */}
       </div>
-
     </div>
   )
 }
