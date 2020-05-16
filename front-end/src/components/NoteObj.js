@@ -1,10 +1,20 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  deleteNoteForUser
+} from '../utils/localStorageUtils'
 
-const NoteObj = ({ note, setNote }) => {
+const NoteObj = ({ note, setNote, fetchLatestNotes }) => {
 
   const selectNote = () => {
     setNote(note)
     // console.log(note)
+  }
+
+  const deleteNote = () => {
+    deleteNoteForUser({ ...note })
+    fetchLatestNotes()
+    // console.log(note.id + " - Info Pressed")
   }
 
   return(
@@ -13,15 +23,12 @@ const NoteObj = ({ note, setNote }) => {
       <p>{note.content}</p>
       <h6>{note.lastModified}</h6>
 
-      {/* <button
-      type="submit"
-      onClick={handleNoteObjSelection}
-      className="NoteObj_Button"
-      >
-        <h2>{title}</h2>
-        <p>{content}</p>
-        <h6>{lastModified}</h6>
-      </button> */}
+      <div className="NoteObjInfo" onClick={deleteNote}>
+        <FontAwesomeIcon icon={['fas', 'trash']} className="sidenav-icon"/>
+        {/* <span>•</span>
+        <span>•</span>
+        <span>•</span> */}
+      </div>
 
     </div>
   )
