@@ -13,17 +13,12 @@ const Dashboard = ( { user } ) => {
 
   const fetchLatestNotes = () => setNotes(getAllNotesForUser(user))
 
-  // const handleNoteObjSelection = useCallback((id) => {
-  //   setNoteId(id)
-  //   console.log(noteId)
-  // }, [noteId, setNoteId])
-
   // Removed <body> since there is already a body in the root HTML document
   return(
     <>
       <SideNav className='sidenav' user={user} notes={notes} fetchLatestNotes={fetchLatestNotes}/>
       <div className='grid-container'>
-        <Overview className='Overview' user={user} notes={notes} note={note} setNote={setNote}/>
+        <Overview className='Overview' user={user} notes={notes} note={note} setNote={setNote} fetchLatestNotes={fetchLatestNotes}/>
         <Note className='Note' user={user} note={note} fetchLatestNotes={fetchLatestNotes}/>
       </div>
     </>
