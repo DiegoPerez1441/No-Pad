@@ -55,6 +55,12 @@ button {
   outline: none !important;
 }
 
+/* TextAreas
+==================== */
+textarea {
+  outline: none !important;
+}
+
 /* Font Awesome Customization
 ==================== */
 .fa-ul {
@@ -87,6 +93,7 @@ button {
   font-family: 'Open Sans', sans-serif;
   /* background-color: rgba(0, 0, 0, 1); */
   background-color: rgb(25, 25, 25);
+  box-sizing: border-box;
 
   transition: width 0.5s;
 }
@@ -99,6 +106,7 @@ button {
   display: flex;
 
   padding: 10px;
+  box-sizing: border-box;
 
   /* background-color: rgba(65, 70, 70, 0.5); */
 }
@@ -139,22 +147,93 @@ button {
   /* height: 100%; */
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 
-  padding: 10px;
+  padding: 10px 0;
 }
+#NewNote {
+  color: rgb(220, 220, 220);
+  font-size: 1em;
+  padding: 5px 0px;
+}
+#NewNoteIcon {
+  color: rgb(23, 212, 23);
+  font-size: 1.4em;
+}
+#NewNote:hover {
+  background-color: rgb(64, 64, 64);
+}
+
 .QuickAccess_list li {
   color: rgb(220, 220, 220);
   font-size: 1em;
   padding: 5px 0;
 }
 .QuickAccess_list li:hover {
-  /* background-color: rgb(64, 64, 64); */
+  background-color: rgb(64, 64, 64);
   color: white;
 }
-.QuickAccess_list i {
+/* .QuickAccess_list i {
   color: rgb(220, 220, 220);
   padding: 0 10px 0 0;
   font-size: 0.9em;
+} */
+.sidenav-icon {
+  color: rgb(220, 220, 220);
+  padding: 0 10px 0 10px;
+  font-size: 0.9em;
+}
+
+/* Quick Access
+==================== */
+.modal {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  /* padding: 200px 20%; */
+  box-sizing: border-box;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-content {
+  /* width: 100%;
+  height: 100%; */
+  width: 600px;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+
+  background-color: rgb(220, 220, 220);
+}
+.modal-content h1 {
+  color: black;
+  font-size: 1.2em;
+}
+.modal-content label {
+  color: black;
+}
+.modal-content button {
+  color: white;
+}
+.modal-content #cancelNewNote {
+  margin: 0 !important;
+}
+.modal-content .button_form:not(.disabled):hover{
+  background-color: rgb(255, 255, 255);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content .button_form.disabled {
+  color: rgb(180, 180, 180);
+  cursor: default;
 }
 
 /* Workspaces
@@ -163,17 +242,19 @@ button {
   display: flex;
   width: 100%;
   flex-direction: column;
+  box-sizing: border-box;
 
-  padding: 10px;
+  padding: 10px 0;
 }
 .Workspaces h2 {
   color: rgb(180, 180, 180);
   font-size: 1em;
+  padding: 0 10px;
 }
 .Workspaces_list li {
   color: rgb(220, 220, 220);
   font-size: 1em;
-  padding: 5px 0;
+  padding: 5px 25px;
 }
 .Workspaces_list li:hover {
   background-color: rgb(64, 64, 64);
@@ -196,8 +277,9 @@ button {
   display: flex;
   width: 100%;
   flex-direction: column;
+  box-sizing: border-box;
 
-  padding: 10px;
+  padding: 10px 0;
 }
 .Misc h2 {
   color: rgb(180, 180, 180);
@@ -231,6 +313,7 @@ button {
 ==================== */
 .grid-container {
   height: 100%;
+  width: 100%;
   /* Same as the Sidenav */
   margin-left: 250px;
   display: grid;
@@ -243,18 +326,19 @@ button {
   transition: margin-left 0.5s;
 }
 
-/* grid-container
+/* Overview
 ==================== */
 .Overview {
   grid-area: Overview;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
   background-color: rgb(38, 38, 38);
   box-sizing: border-box;
+  overflow-y: auto;
 }
 .Overview .selected {
-  width: 100%;
   height: 75px;
   display: flex;
 
@@ -275,17 +359,95 @@ button {
   font-size: 1.4em;
 }
 
+/* NoteObj
+==================== */
+.NoteObj-container {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  border-bottom: 2px solid rgb(64, 64, 64);
+  padding: 20px;
+
+  justify-content: space-evenly;
+  box-sizing: border-box;
+}
+.NoteObj-container:hover {
+  background-color: rgb(64, 64, 64);
+}
+.NoteObj {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-evenly;
+  box-sizing: border-box;
+}
+.NoteObj h2 {
+  color: white;
+  font-size: 1em;
+}
+.NoteObj h6 {
+  color: rgb(180, 180, 180);
+  font-size: 0.7em;
+}
+.NoteObj p {
+  width: 100%;
+  max-height: 45px;
+  overflow: hidden;
+
+
+  color: rgb(180, 180, 180);
+  font-size: 0.9em;
+
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+/* Note
+==================== */
+.NoteObjInfo {
+  display: flex;
+  position: absolute;
+  color: rgb(180, 180, 180);
+
+  right: 20px;
+  top: 20px;
+
+  padding: 5px;
+  box-sizing: border-box;
+}
+.NoteObjInfo .sidenav-icon:hover {
+  color: white;
+  cursor: default;
+}
+
 /* Note
 ==================== */
 .Note {
   grid-area: Note;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
   background-color: rgb(51, 51, 51);
   box-sizing: border-box;
+  padding: 40px 40px 0px 40px;
 }
-
+.Note h2 {
+  color: white;
+  font-size: 1.2em;
+}
+.Note textarea {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 5px;
+  margin: 10px 0 0 0;
+}
 
 
 

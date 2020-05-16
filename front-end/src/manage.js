@@ -1,3 +1,4 @@
+import $ from 'jquery';
 // Wait for the document to load before jQuery starts
 $(document).ready(function() {
 

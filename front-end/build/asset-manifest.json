@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0ba10cf1.chunk.css",
+    "main.js": "/static/js/main.3f814435.chunk.js",
+    "main.js.map": "/static/js/main.3f814435.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a0a66673.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a0a66673.js.map",
+    "static/js/2.906e6b32.chunk.js": "/static/js/2.906e6b32.chunk.js",
+    "static/js/2.906e6b32.chunk.js.map": "/static/js/2.906e6b32.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.e76a2686840ad71e7fc314aada73ce9d.js": "/precache-manifest.e76a2686840ad71e7fc314aada73ce9d.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.0ba10cf1.chunk.css.map": "/static/css/main.0ba10cf1.chunk.css.map",
+    "static/js/2.906e6b32.chunk.js.LICENSE.txt": "/static/js/2.906e6b32.chunk.js.LICENSE.txt",
+    "static/media/style-create-account.css": "/static/media/LogInScreen-background.c2b130ef.jpg",
+    "static/media/defaultProfilePicture.png": "/static/media/defaultProfilePicture.0d5a23fc.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a0a66673.js",
+    "static/js/2.906e6b32.chunk.js",
+    "static/css/main.0ba10cf1.chunk.css",
+    "static/js/main.3f814435.chunk.js"
+  ]
+}

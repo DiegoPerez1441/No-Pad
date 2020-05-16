@@ -1,24 +1,26 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-class Overview extends React.Component {
-  render () {
-    return(
-      <div className="Overview">
+import NoteObj from './NoteObj'
 
-        <div className="selected">
-          <div className="menu-icon active"><i class="fas fa-bars"></i></div>
-          <h2>All Notes</h2>
-        </div>
+const Overview = ( { user, notes, note, setNote, fetchLatestNotes } ) => {
 
-        
-        <div className="note_file"></div>
-        <div className="note_file"></div>
-        <div className="note_file"></div>
-        <div className="note_file"></div>
+  return(
+    <div className="Overview">
 
+      <div className="selected">
+        <div className="menu-icon active"><FontAwesomeIcon icon={['fas', 'bars']} /></div>
+        <h2>All Notes</h2>
       </div>
-    )
-  }
+
+      {notes.map((l_note, index) => {
+        return <NoteObj key={`note-object-${index}`} note={l_note} setNote={setNote} fetchLatestNotes={fetchLatestNotes}/>
+        // console.log(`note-object-${index}`)
+      })}
+
+    </div>
+  )
+  
 }
 
 export default Overview;
