@@ -9,7 +9,11 @@ import {
   faBars 
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faPlusSquare, faCaretRight, faFileAlt, faStar, faFolder, faUserFriends, faBriefcase, faChalkboardTeacher, faUser, faTrash, faCog, faBars);
+library.add(
+  faPlusSquare, faCaretRight, faFileAlt, faStar, faFolder, 
+  faUserFriends, faBriefcase, faChalkboardTeacher, faUser, faTrash, faCog, 
+  faBars
+);
 
 function App() {
   return (
