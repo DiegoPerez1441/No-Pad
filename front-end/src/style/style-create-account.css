@@ -132,3 +132,13 @@ input {
 
   margin: 5px 0;
 }
+#create-account-form #return-to-login-text {
+  color: rgb(240, 240, 240);
+}
+#create-account-form #return-to-login-text > span a {
+  color: rgb(240, 240, 240);
+  text-decoration: none;
+}
+#create-account-form #return-to-login-text > span:hover a {
+  color: rgb(255, 255, 255);
+}

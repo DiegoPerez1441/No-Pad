@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import defaultProfilePic from '../img/defaultProfilePicture.png'
-import { findByLabelText } from '@testing-library/react';
 import { 
-  getAllNotesForUser,
   insertNewNoteForUser
 } from '../utils/localStorageUtils'
 
-const SideNav = ( { user, notes, setNotes } ) => {
+const SideNav = ( { user, notes, fetchLatestNotes } ) => {
 
   const [newNoteMenuOpen, setNewNoteMenuOpen] = useState(false)
 
@@ -15,6 +13,7 @@ const SideNav = ( { user, notes, setNotes } ) => {
     setNewNoteMenuOpen(true)
   }
   const closeNewNoteMenu = () => {
+    setNoteName("")
     setNewNoteMenuOpen(false)
   }
 
@@ -39,10 +38,10 @@ const SideNav = ( { user, notes, setNotes } ) => {
     e.preventDefault();
     if(isInputFilled){
       insertNewNoteForUser(user, noteName, "")
-      setNotes(getAllNotesForUser(user))
+      fetchLatestNotes()
       closeNewNoteMenu()
     }
-  }, [user, noteName, setNotes, isInputFilled])
+  }, [user, noteName, fetchLatestNotes, isInputFilled])
   
   return(
     <aside className="sidenav">
