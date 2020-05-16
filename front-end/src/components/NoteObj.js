@@ -8,13 +8,14 @@ const NoteObj = ({ note, setNote, fetchLatestNotes }) => {
 
   const selectNote = () => {
     setNote(note)
-    // console.log(note)
+    console.log(note.id + " - Note Selected")
   }
 
   const deleteNote = () => {
     deleteNoteForUser({ ...note })
+    setNote(null)
     fetchLatestNotes()
-    // console.log(note.id + " - Info Pressed")
+    console.log(note.id + " - Info Pressed")
   }
 
   return(
