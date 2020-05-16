@@ -92,12 +92,12 @@ const CreateAccount = ({
           {(arePasswordsDifferent) && <div className="login-error-mess">Passwords Don't Match</div>}
 
           <button 
-          type="submit"
-          onClick={handleButtonClick}
-          className={!isInputFilled ? "disabled button_form" : "button_form"}>
+            type="submit"
+            onClick={handleButtonClick}
+            className={!isInputFilled ? "disabled button_form" : "button_form"}>
             Create Account
           </button>
-          <h5>Registered? <span><NavLink to="/login" className="create-account-link">Login</NavLink></span></h5>
+          <h5 id="return-to-login-text">Registered? <span><NavLink to="/login" className="create-account-link">Login</NavLink></span></h5>
         </form>
 
       </div>
