@@ -13,11 +13,6 @@ const Dashboard = ( { user } ) => {
 
   const fetchLatestNotes = () => setNotes(getAllNotesForUser(user))
 
-  // const handleNoteObjSelection = useCallback((id) => {
-  //   setNoteId(id)
-  //   console.log(noteId)
-  // }, [noteId, setNoteId])
-
   // Removed <body> since there is already a body in the root HTML document
   return(
     <>
