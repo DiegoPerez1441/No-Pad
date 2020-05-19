@@ -53,6 +53,11 @@ const Router = () => {
     setUser(existingUser)
   }, [setIsEmailWrong, setIsPasswordWrong, setIsAuthorized, setUser])
 
+  const allowAuthorization = () => {
+    setIsAuthorized(true)
+    // console.log("Authorized")
+  }
+
   const checkCreateAccount = useCallback((name, email, password, confirmPassword) => {
     // Prevent Errors upon restart of the form
     setIsEmailUnvalid(false)
@@ -74,8 +79,8 @@ const Router = () => {
 
     // function only gets to this point if the user doesn't exist and the passwords match
     setIsAccountValid(true)
-    setUser(insertNewUser(name, email, password))
-    setIsAuthorized(true)
+    // setUser(insertNewUser(name, email, password))
+    // setIsAuthorized(true)
     // console.log("Account Valid")
 
   }, [setIsEmailUnvalid, setArePasswordsDifferent, setIsAccountValid])
@@ -85,6 +90,7 @@ const Router = () => {
       <Route path="/login">
         <LogIn 
           checkLogin={checkLogin}
+          allowAuthorization={allowAuthorization}
           isAuthorized={isAuthorized}
           isEmailWrong={isEmailWrong}
           isPasswordWrong={isPasswordWrong}
@@ -93,6 +99,7 @@ const Router = () => {
       <Route path="/create-account">
         <CreateAccount
           checkCreateAccount={checkCreateAccount}
+          allowAuthorization={allowAuthorization}
           isAccountValid={isAccountValid}
           isEmailUnvalid={isEmailUnvalid}
           arePasswordsDifferent={arePasswordsDifferent}
@@ -101,7 +108,8 @@ const Router = () => {
       </Route>
       {!isAuthorized && <Redirect to="/login"/>}
       <Route path="/dash">
-        <Dashboard user={user}/>
+        {/* <Dashboard user={user}/> */}
+        <Dashboard/>
       </Route>
       <Redirect path="*" to="/login"/>
     </Switch>
