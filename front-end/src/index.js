@@ -5,11 +5,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import firebaseConfig from '.constants/firebase_config.js'
+import { firebaseConfig } from './constants/firebase_config.js'
 
 const firebase = require('firebase')
 require('firebase/firestore')
-
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
