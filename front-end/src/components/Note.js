@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-
-import { 
-  updateNoteForUser
-} from '../utils/localStorageUtils'
+import ReactQuill from 'react-quill'
+import debounce from '../helpers'
+import { updateNoteForUser } from '../utils/localStorageUtils'
 
 const Note = ( {user, note, fetchLatestNotes } ) => {
 

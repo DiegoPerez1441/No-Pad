@@ -1,8 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  deleteNoteForUser
-} from '../utils/localStorageUtils'
+import { removeHTMLTags } from '../helpers'
+import { deleteNoteForUser } from '../utils/localStorageUtils'
 
 const NoteObj = ({ note, setNote, fetchLatestNotes }) => {
 
