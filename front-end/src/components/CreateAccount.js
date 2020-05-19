@@ -56,7 +56,8 @@ const CreateAccount = ({
       .createUserWithEmailAndPassword(email, password)
       .then(authRes => {
         const userObj = {
-          email: authRes.user.email
+          name: name,
+          email: authRes.user.email,
         }
         firebase
           .firestore()

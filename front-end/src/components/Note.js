@@ -3,13 +3,17 @@ import ReactQuill from 'react-quill'
 import debounce from '../helpers'
 import { updateNoteForUser } from '../utils/localStorageUtils'
 
-const Note = ( {user, note, fetchLatestNotes } ) => {
+const Note = ( { note, fetchLatestNotes } ) => {
+
+  const [id, setId] = useState('')
+  const [title, setTitle] = useState('')
+  const [text, setText] = useState('')
 
   const [noteContent, setNoteContent] = useState("")
 
-  useEffect(() => {
-    note !== null && setNoteContent(note.content)
-  }, [note])
+  // useEffect(() => {
+  //   note !== null && setNoteContent(note.content)
+  // }, [note])
 
   const handleNoteContentChange = (e) => {
     const newNoteContent = e.target.value
@@ -22,11 +26,28 @@ const Note = ( {user, note, fetchLatestNotes } ) => {
     fetchLatestNotes()
   }, [note, noteContent, fetchLatestNotes])
 
+  const update = debounce(() => {
+    // Come back later
+    console.log("Updating database")
+  }, 1500)
+
+  const updateBody = async (val) => {
+    await setText(val)
+
+    update()
+  }
+
   return(
-    <div className="Note">
-      <h2>{(note !== null) ? note.title : ""}</h2>
+    <div className="noteEditorContainer">
+      {/* <h2>{(note !== null) ? note.title : ""}</h2>
       {(note !== null) ? <textarea value={noteContent} onChange={handleNoteContentChange}></textarea> : ""}
-      {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""}
+      {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""} */}
+
+      <ReactQuill
+        value={text}
+        onChange={updateBody}>
+      </ReactQuill>
+
     </div>
   )
   

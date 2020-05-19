@@ -41,7 +41,7 @@ const LogIn = ({
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
-          allowAuthorization()
+          allowAuthorization(email)
           // console.log("To Dashboard")
         }, err => {
           console.log(err + " - sign in error")

@@ -18,6 +18,7 @@ const Router = () => {
   // user will be replaced by user object from db in the checkLogin function below
   // Using the entire user object as a value for your components means you don't need to look up database info very often
   const [user, setUser] = useState(null)
+  const [email, setEmail] = useState(null)
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [isEmailWrong, setIsEmailWrong] = useState(false)
   const [isPasswordWrong, setIsPasswordWrong] = useState(false)
@@ -53,7 +54,8 @@ const Router = () => {
     setUser(existingUser)
   }, [setIsEmailWrong, setIsPasswordWrong, setIsAuthorized, setUser])
 
-  const allowAuthorization = () => {
+  const allowAuthorization = (email) => {
+    setEmail(email)
     setIsAuthorized(true)
     // console.log("Authorized")
   }
@@ -109,7 +111,7 @@ const Router = () => {
       {!isAuthorized && <Redirect to="/login"/>}
       <Route path="/dash">
         {/* <Dashboard user={user}/> */}
-        <Dashboard/>
+        <Dashboard email={email}/>
       </Route>
       <Redirect path="*" to="/login"/>
     </Switch>

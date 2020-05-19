@@ -7,20 +7,39 @@ import '../style/style-dashboard.css';
 import { getAllNotesForUser } from '../utils/localStorageUtils';
 const firebase = require('firebase')
 
-const Dashboard = ( { user } ) => {
+const Dashboard = ( { email } ) => {
 
   // const [notes, setNotes] = useState(getAllNotesForUser(user))
   // const [note, setNote] = useState(null)
 
   // const fetchLatestNotes = () => setNotes(getAllNotesForUser(user))
 
-  const [notes, setNotes] = useState(null)
+  const [notes, setNotes] = useState([])
   const [selectedNote, setSelectedNote] = useState(null)
-  const [selectedNoteIndex, setSelectedNoteIndex] = useState(null)
+  const [selectedNoteId, setSelectedNoteId] = useState(null)
+
+  const selectNote = (_id) => {
+    const s_note = notes.filter((i) => _id === i.id)
+    setSelectedNote(s_note)
+  }
 
   useEffect(() => {
+    // firebase
+    //   .firestore()
+    //   .collection('notes')
+    //   .onSnapshot(serverUpdate => {
+    //     const _notes = serverUpdate.docs.map(_doc => {
+    //       const data = _doc.data()
+    //       data['id'] = _doc.id
+    //       return data
+    //     })
+    //     setNotes(_notes)
+    //     console.log(_notes)
+    //   })
     firebase
       .firestore()
+      .collection('users')
+      .doc(email)
       .collection('notes')
       .onSnapshot(serverUpdate => {
         const _notes = serverUpdate.docs.map(_doc => {
@@ -29,7 +48,7 @@ const Dashboard = ( { user } ) => {
           return data
         })
         setNotes(_notes)
-        console.log(_notes)
+        // console.log(_notes)
       })
   }, [])
 
@@ -42,11 +61,11 @@ const Dashboard = ( { user } ) => {
         <Overview className='Overview' user={user} notes={notes} note={note} setNote={setNote} fetchLatestNotes={fetchLatestNotes}/>
         <Note className='Note' user={user} note={note} fetchLatestNotes={fetchLatestNotes}/>
       </div> */}
-      {/* <SideNav className='sidenav'/>
+      <SideNav className='sidenav'/>
       <div className='grid-container'>
-        <Overview className='Overview'/>
-        <Note className='Note'/>
-      </div> */}
+        <Overview className='Overview' notes={notes} selectedNoteId={selectedNoteId} selectNote={selectNote}/>
+        <Note className='Note' note={selectNote}/>
+      </div>
     </>
   )
   

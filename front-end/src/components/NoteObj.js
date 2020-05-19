@@ -3,26 +3,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { removeHTMLTags } from '../helpers'
 import { deleteNoteForUser } from '../utils/localStorageUtils'
 
-const NoteObj = ({ note, setNote, fetchLatestNotes }) => {
+const NoteObj = ({ note, selectedNoteId, selectNote }) => {
 
-  const selectNote = () => {
-    setNote(note)
-    console.log(note.id + " - Note Selected")
-  }
+  // const selectNote = () => {
+  //   // setNote(note)
+  //   // console.log(note.id + " - Note Selected")
+
+
+  // }
 
   const deleteNote = () => {
-    deleteNoteForUser({ ...note })
-    setNote(null)
-    fetchLatestNotes()
-    console.log(note.id + " - Info Pressed")
+    // deleteNoteForUser({ ...note })
+    // setNote(null)
+    // fetchLatestNotes()
+    // console.log(note.id + " - Info Pressed")
   }
 
   return(
     <div className="NoteObj-container">
-      <div className="NoteObj" onClick={selectNote}>
+      <div className="NoteObj" onClick={() => {selectNote(note.id)}}>
         <h2>{note.title}</h2>
-        <p>{note.content}</p>
-        <h6>{note.lastModified}</h6>
+        <p>{removeHTMLTags(note.body.substring(0, 20)) + "..."}</p>
+        {/* <h6>{note.id}</h6> */}
+        {/* <h6>{note.lastModified}</h6> */}
       </div>
       <div className="NoteObjInfo" onClick={deleteNote}>
         <FontAwesomeIcon icon={['fas', 'trash']} className="sidenav-icon"/>
