@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill'
 import debounce from '../helpers'
 import { updateNoteForUser } from '../utils/localStorageUtils'
 
-const Note = ( { note, fetchLatestNotes } ) => {
+const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
 
   const [id, setId] = useState('')
   const [title, setTitle] = useState('')
@@ -46,11 +46,12 @@ const Note = ( { note, fetchLatestNotes } ) => {
 
   const RQOnChange = debounce((content, delta, source, editor) => {
     setNoteContent(editor.getHTML())
+    setUpdatedNote(editor.getHTML())
     console.log("Note Updated")
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
 		// console.log(editor.getLength()); // number of characters
-  }, 1000)
+  }, 3000)
 
   // const updateBody = async (val) => {
   //   await setText(val)

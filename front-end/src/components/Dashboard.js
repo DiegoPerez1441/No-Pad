@@ -18,10 +18,14 @@ const Dashboard = ( { email } ) => {
   const [notes, setNotes] = useState([])
   const [selectedNote, setSelectedNote] = useState(null)
   const [selectedNoteId, setSelectedNoteId] = useState(null)
+  
+  const [updatedNote, setUpdatedNote] = useState(null)
 
   const selectNote = (_id) => {
     const s_note = notes.filter((i) => _id === i.id)
     setSelectedNote(s_note)
+    setSelectedNoteId(_id)
+    console.log(_id)
   }
 
   useEffect(() => {
@@ -57,6 +61,19 @@ const Dashboard = ( { email } ) => {
       })
   }, [])
 
+  useEffect(() => {
+    if (updatedNote != null) {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(email)
+        .collection('notes')
+        .doc(selectedNoteId).set({
+          body: updatedNote
+        })
+    }
+  }, [updatedNote])
+
 
   // Removed <body> since there is already a body in the root HTML document
   return(
@@ -73,7 +90,7 @@ const Dashboard = ( { email } ) => {
         {(selectedNote === null) ? (
           <EmptyNote/>
         ) : (
-          <Note className='Note' note={selectedNote}/>
+          <Note className='Note' note={selectedNote} setUpdatedNote={setUpdatedNote}/>
         )}
 
       </div>
