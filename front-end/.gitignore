@@ -9,7 +9,11 @@
 /coverage
 
 # production
-#/build
+/build
+
+# firebaseConfig
+# /constants
+firebase_config.js
 
 # misc
 .DS_Store

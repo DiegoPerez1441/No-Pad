@@ -2,8 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect, NavLink } from 'react-router-dom'
 import '../style/style-login.css'
 
+const firebase = require('firebase')
+
 const LogIn = ({
   checkLogin,
+  allowAuthorization,
   isAuthorized,
   isEmailWrong,
   isPasswordWrong
@@ -32,9 +35,20 @@ const LogIn = ({
   const handleButtonClick = useCallback((e) => {
     e.preventDefault();
     if(isInputFilled){
-      checkLogin(email, password)
+      // checkLogin(email, password)
+
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          allowAuthorization(email)
+          // console.log("To Dashboard")
+        }, err => {
+          console.log(err + " - sign in error")
+        })
+
     }
-  }, [email, password, isInputFilled, checkLogin])
+  }, [email, password, isInputFilled, allowAuthorization])
 
   // useEffect looks like useCallback, but instead of a creating a function for you to call,
   // it runs the function inside automatically any time one of its "dependencies" changes.

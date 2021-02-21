@@ -1,16 +1,32 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import ReactQuill from 'react-quill'
+import debounce from '../helpers'
+import { updateNoteForUser } from '../utils/localStorageUtils'
 
-import { 
-  updateNoteForUser
-} from '../utils/localStorageUtils'
+const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
 
-const Note = ( {user, note, fetchLatestNotes } ) => {
+  const [id, setId] = useState('')
+  const [title, setTitle] = useState('')
+  // const [text, setText] = useState('')
 
   const [noteContent, setNoteContent] = useState("")
 
+  // useEffect(() => {
+  //   note !== null && setNoteContent(note.content)
+  // }, [note])
+
   useEffect(() => {
-    note !== null && setNoteContent(note.content)
+    if (note === null) {
+      setNoteContent('')
+    } else {
+      setNoteContent(note[0].body)
+      console.log("Note: " + note[0])
+    }
   }, [note])
+
+  useEffect(() => {
+    console.log("Note Content: " + noteContent)
+  }, [noteContent])
 
   const handleNoteContentChange = (e) => {
     const newNoteContent = e.target.value
@@ -23,11 +39,82 @@ const Note = ( {user, note, fetchLatestNotes } ) => {
     fetchLatestNotes()
   }, [note, noteContent, fetchLatestNotes])
 
+  const update = debounce(() => {
+    // Come back later
+    console.log("Updating database")
+  }, 1500)
+
+  const RQOnChange = debounce((content, delta, source, editor) => {
+    setNoteContent(editor.getHTML())
+    setUpdatedNote(editor.getHTML())
+    console.log("Note Updated")
+    // console.log(editor.getHTML()); // rich text
+		// console.log(editor.getText()); // plain text
+		// console.log(editor.getLength()); // number of characters
+  }, 1500)
+
+  // const updateBody = async (val) => {
+  //   await setText(val)
+
+  //   update()
+  // }
+
+  const RQModules = {
+    toolbar: [
+        [{ 'font': [] }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        [{ 'align': [] }],
+        [{ 'color': [] }, { 'background': [] }],
+        ['clean']
+      ]
+  };
+
+  const RQModules_Adv = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
+    
+      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+      [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }],                         // text direction
+    
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+    
+      ['clean']                                         // remove formatting button
+    ]
+  };
+
+  const RQFormats = [
+    'font',
+    'size',
+    'bold', 'italic', 'underline',
+    'list', 'bullet',
+    'align',
+    'color', 'background'
+  ];
+
   return(
-    <div className="Note">
-      <h2>{(note !== null) ? note.title : ""}</h2>
+    <div className="noteEditorContainer">
+      {/* <h2>{(note !== null) ? note.title : ""}</h2>
       {(note !== null) ? <textarea value={noteContent} onChange={handleNoteContentChange}></textarea> : ""}
-      {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""}
+      {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""} */}
+
+      <ReactQuill
+        modules={RQModules}
+        // formats={RQFormats}
+        value={noteContent}
+        onChange={RQOnChange}>
+      </ReactQuill>
+
     </div>
   )
   

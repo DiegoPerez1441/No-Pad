@@ -2,8 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect, NavLink } from 'react-router-dom'
 import '../style/style-create-account.css'
 
+const firebase = require('firebase')
+
 const CreateAccount = ({
   checkCreateAccount,
+  allowAuthorization,
   isAccountValid,
   isEmailUnvalid,
   arePasswordsDifferent,
@@ -46,9 +49,33 @@ const CreateAccount = ({
   const handleButtonClick = useCallback((e) => {
     e.preventDefault();
     if(isInputFilled){
-      checkCreateAccount(name, email, password, confirmPassword);
+      // checkCreateAccount(name, email, password, confirmPassword);
+
+      firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(authRes => {
+        const userObj = {
+          name: name,
+          email: authRes.user.email,
+        }
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(email)
+          .set(userObj)
+          .then(() => {
+            allowAuthorization()
+            // console.log("To Dashboard")
+          }, dbError => {
+            console.log(dbError + " - Failed to add user dbError")
+          })
+      }, authError => {
+        console.log(authError + " - Failed to add user authError")
+      })
+
     }
-  }, [name, email, password, confirmPassword, isInputFilled, checkCreateAccount])
+  }, [email, password, isInputFilled, allowAuthorization])
 
   useEffect(() => {
     if(name === "" || email === "" || password === "" || confirmPassword === ""){

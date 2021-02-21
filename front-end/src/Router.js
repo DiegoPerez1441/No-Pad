@@ -18,6 +18,7 @@ const Router = () => {
   // user will be replaced by user object from db in the checkLogin function below
   // Using the entire user object as a value for your components means you don't need to look up database info very often
   const [user, setUser] = useState(null)
+  const [email, setEmail] = useState(null)
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [isEmailWrong, setIsEmailWrong] = useState(false)
   const [isPasswordWrong, setIsPasswordWrong] = useState(false)
@@ -53,6 +54,12 @@ const Router = () => {
     setUser(existingUser)
   }, [setIsEmailWrong, setIsPasswordWrong, setIsAuthorized, setUser])
 
+  const allowAuthorization = (email) => {
+    setEmail(email)
+    setIsAuthorized(true)
+    // console.log("Authorized")
+  }
+
   const checkCreateAccount = useCallback((name, email, password, confirmPassword) => {
     // Prevent Errors upon restart of the form
     setIsEmailUnvalid(false)
@@ -74,8 +81,8 @@ const Router = () => {
 
     // function only gets to this point if the user doesn't exist and the passwords match
     setIsAccountValid(true)
-    setUser(insertNewUser(name, email, password))
-    setIsAuthorized(true)
+    // setUser(insertNewUser(name, email, password))
+    // setIsAuthorized(true)
     // console.log("Account Valid")
 
   }, [setIsEmailUnvalid, setArePasswordsDifferent, setIsAccountValid])
@@ -85,6 +92,7 @@ const Router = () => {
       <Route path="/login">
         <LogIn 
           checkLogin={checkLogin}
+          allowAuthorization={allowAuthorization}
           isAuthorized={isAuthorized}
           isEmailWrong={isEmailWrong}
           isPasswordWrong={isPasswordWrong}
@@ -93,6 +101,7 @@ const Router = () => {
       <Route path="/create-account">
         <CreateAccount
           checkCreateAccount={checkCreateAccount}
+          allowAuthorization={allowAuthorization}
           isAccountValid={isAccountValid}
           isEmailUnvalid={isEmailUnvalid}
           arePasswordsDifferent={arePasswordsDifferent}
@@ -101,7 +110,8 @@ const Router = () => {
       </Route>
       {!isAuthorized && <Redirect to="/login"/>}
       <Route path="/dash">
-        <Dashboard user={user}/>
+        {/* <Dashboard user={user}/> */}
+        <Dashboard email={email}/>
       </Route>
       <Redirect path="*" to="/login"/>
     </Switch>
