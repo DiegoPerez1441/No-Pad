@@ -58,14 +58,14 @@ const Dashboard = ( { email } ) => {
       
     setSnackBarToggle_ND(true)
 
-    console.log("Note Deleted | Id: " + noteId)
+    // console.log("Note Deleted | Id: " + noteId)
   }
 
   const selectNote = (_id) => {
     const s_note = notes.filter((i) => _id === i.id)
     setSelectedNote(s_note)
     setSelectedNoteId(_id)
-    console.log(_id)
+    // console.log(_id)
   }
 
   useEffect(() => {

@@ -27,7 +27,7 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
 
   useEffect(() => {
     if (note === null) {
-      // setNoteTitle("")
+      setNoteTitle("")
       setNoteContent("")
     } else {
       setNoteTitle(note[0].title)
@@ -60,7 +60,7 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
   const RQOnChange = debounce((content, delta, source, editor) => {
     setNoteContent(editor.getHTML())
     setUpdatedNote(editor.getHTML())
-    console.log("Note Updated")
+    // console.log("Note Updated")
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
 		// console.log(editor.getLength()); // number of characters
@@ -149,6 +149,7 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
         id="noteTitleInput"
         fullWidth={true}
         value={noteTitle}
+        placeholder="Note Title"
         onChange={handleNoteTitleChange}>
       </InputBase>
 
