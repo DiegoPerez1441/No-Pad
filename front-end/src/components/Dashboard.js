@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SideNav from './SideNav';
 import Note from './Note';
+import EmptyNote from './EmptyNote';
 import Overview from './Overview';
 // import '../manage';
 import '../style/style-dashboard.css';
@@ -22,6 +23,10 @@ const Dashboard = ( { email } ) => {
     const s_note = notes.filter((i) => _id === i.id)
     setSelectedNote(s_note)
   }
+
+  useEffect(() => {
+    console.log(selectedNote)
+  }, [selectedNote])
 
   useEffect(() => {
     // firebase
@@ -64,7 +69,13 @@ const Dashboard = ( { email } ) => {
       <SideNav className='sidenav'/>
       <div className='grid-container'>
         <Overview className='Overview' notes={notes} selectedNoteId={selectedNoteId} selectNote={selectNote}/>
-        <Note className='Note' note={selectNote}/>
+        
+        {(selectedNote === null) ? (
+          <EmptyNote/>
+        ) : (
+          <Note className='Note' note={selectedNote}/>
+        )}
+
       </div>
     </>
   )
