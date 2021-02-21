@@ -3,6 +3,15 @@ import ReactQuill from 'react-quill'
 import debounce from '../helpers'
 import { updateNoteForUser } from '../utils/localStorageUtils'
 
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import DirectionsIcon from '@material-ui/icons/Directions';
+
 const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
 
   const [id, setId] = useState('')
@@ -102,11 +111,40 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
     'color', 'background'
   ];
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      padding: '2px 4px',
+      display: 'flex',
+      alignItems: 'center',
+      width: 400,
+    },
+    input: {
+      marginLeft: theme.spacing(0),
+      flex: 1,
+    },
+    iconButton: {
+      padding: 10,
+    },
+    divider: {
+      height: 28,
+      margin: 4,
+    },
+  }));
+
+  const classes = useStyles()
+
   return(
     <div className="noteEditorContainer">
       {/* <h2>{(note !== null) ? note.title : ""}</h2>
       {(note !== null) ? <textarea value={noteContent} onChange={handleNoteContentChange}></textarea> : ""}
       {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""} */}
+
+      <InputBase
+        className={classes.input}
+        fullWidth={true}
+        placeholder="Title"
+        inputProps={{ 'aria-label': note[0].title }}
+      />
 
       <ReactQuill
         modules={RQModules}
