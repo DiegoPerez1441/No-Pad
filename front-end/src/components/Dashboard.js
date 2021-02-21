@@ -25,7 +25,7 @@ const Dashboard = ( { email } ) => {
   }
 
   useEffect(() => {
-    console.log(selectedNote)
+    // console.log(selectedNote)
   }, [selectedNote])
 
   useEffect(() => {

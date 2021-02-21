@@ -16,7 +16,16 @@ const Note = ( { note, fetchLatestNotes } ) => {
   // }, [note])
 
   useEffect(() => {
-    console.log(noteContent)
+    if (note === null) {
+      setNoteContent('')
+    } else {
+      setNoteContent(note[0].body)
+      console.log("Note: " + note[0])
+    }
+  }, [note])
+
+  useEffect(() => {
+    console.log("Note Content: " + noteContent)
   }, [noteContent])
 
   const handleNoteContentChange = (e) => {
@@ -37,6 +46,7 @@ const Note = ( { note, fetchLatestNotes } ) => {
 
   const RQOnChange = debounce((content, delta, source, editor) => {
     setNoteContent(editor.getHTML())
+    console.log("Note Updated")
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
 		// console.log(editor.getLength()); // number of characters
@@ -76,8 +86,8 @@ const Note = ( { note, fetchLatestNotes } ) => {
       {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""} */}
 
       <ReactQuill
-        formats={RQFormats}
-        // modules={RQModules}
+        modules={RQModules}
+        // formats={RQFormats}
         value={noteContent}
         onChange={RQOnChange}>
       </ReactQuill>
