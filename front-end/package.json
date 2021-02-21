@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bcryptjs": "^2.4.3",
     "firebase": "^7.14.4",
+    "firebaseui": "^4.7.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "react": "^16.13.0",
