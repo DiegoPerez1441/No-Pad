@@ -25,8 +25,8 @@ const Dashboard = ( { email } ) => {
   
   const [updatedNote, setUpdatedNote] = useState(null)
 
-  const [snackBarActive, setSnackBarActive] = useState(false)
-  const [snackBarMessage, setSnackBarMessage] = useState('')
+  const [snackBarToggle_ND, setSnackBarToggle_ND] = useState(false)
+  const [snackBarToggle_NC, setSnackBarToggle_NC] = useState(false)
 
   const createNewNote = (noteName) => {
     firebase
@@ -39,7 +39,7 @@ const Dashboard = ( { email } ) => {
         body: ""
       })
 
-      updateSnackBarMessage(true, "Note Created")
+      setSnackBarToggle_NC(true)
   }
 
   const deleteNote = (noteId) => {
@@ -55,7 +55,7 @@ const Dashboard = ( { email } ) => {
       .collection('notes')
       .doc(noteId).delete()
       
-    updateSnackBarMessage(true, "Note Deleted")
+    setSnackBarToggle_ND(true)
 
     console.log("Note Deleted | Id: " + noteId)
   }
@@ -114,22 +114,12 @@ const Dashboard = ( { email } ) => {
     }
   }, [updatedNote])
 
-  // Create an array of SB messaged and cycle through them at a constant interval or make new SB objects for each message
-  const updateSnackBarMessage = (active, message) => {
-    setSnackBarActive(active)
-    setSnackBarMessage(message)
-  }
-
-  const resetSnackBarMessage = () => {
-    setSnackBarActive(false)
-    setSnackBarMessage('')
-  }
-
   // Removed <body> since there is already a body in the root HTML document
   return(
     <>
 
-      <SnackBarMessage message={snackBarMessage} active={snackBarActive}/>
+      <SnackBarMessage message={"Note Created"} toggle={snackBarToggle_NC} setSnackBarToggle={setSnackBarToggle_NC}/>
+      <SnackBarMessage message={"Note Deleted"} toggle={snackBarToggle_ND} setSnackBarToggle={setSnackBarToggle_ND}/>
 
       {/* <SideNav className='sidenav' user={user} notes={notes} fetchLatestNotes={fetchLatestNotes}/>
       <div className='grid-container'>

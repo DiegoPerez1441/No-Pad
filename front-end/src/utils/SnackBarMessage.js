@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-const SnackBarMessage = ( {message, active} ) => {
+const SnackBarMessage = ( {message, toggle, setSnackBarToggle} ) => {
 
   const [snackBarOpen, setSnackBarOpen] = useState(false)
 
@@ -20,11 +20,14 @@ const SnackBarMessage = ( {message, active} ) => {
     }
 
     setSnackBarOpen(false)
+    setSnackBarToggle(false)
   }
 
   useEffect(() => {
-    setSnackBarOpen(active)
-  }, [active])
+    if (toggle) {
+      setSnackBarOpen(true)
+    }
+  }, [toggle])
 
   return (
     <Snackbar
