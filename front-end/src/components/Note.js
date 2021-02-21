@@ -4,18 +4,19 @@ import debounce from '../helpers'
 import { updateNoteForUser } from '../utils/localStorageUtils'
 
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
+import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
+import { TextField } from '@material-ui/core';
 
-const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
+const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } ) => {
 
   const [id, setId] = useState('')
-  const [title, setTitle] = useState('')
+  const [noteTitle, setNoteTitle] = useState('')
   // const [text, setText] = useState('')
 
   const [noteContent, setNoteContent] = useState("")
@@ -26,16 +27,19 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
 
   useEffect(() => {
     if (note === null) {
-      setNoteContent('')
+      // setNoteTitle("")
+      setNoteContent("")
     } else {
+      setNoteTitle(note[0].title)
       setNoteContent(note[0].body)
-      console.log("Note: " + note[0])
+      // console.log("Note: " + note[0])
     }
   }, [note])
 
-  useEffect(() => {
-    console.log("Note Content: " + noteContent)
-  }, [noteContent])
+  // useEffect(() => {
+  //   // console.log("Note Content: " + noteContent)
+  //   // console.log("Note Title: " + noteTitle)
+  // }, [noteTitle, noteContent])
 
   const handleNoteContentChange = (e) => {
     const newNoteContent = e.target.value
@@ -48,10 +52,10 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
     fetchLatestNotes()
   }, [note, noteContent, fetchLatestNotes])
 
-  const update = debounce(() => {
-    // Come back later
-    console.log("Updating database")
-  }, 1500)
+  // const update = debounce(() => {
+  //   // Come back later
+  //   console.log("Updating database")
+  // }, 1500)
 
   const RQOnChange = debounce((content, delta, source, editor) => {
     setNoteContent(editor.getHTML())
@@ -111,23 +115,17 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
     'color', 'background'
   ];
 
+  // Controlled component
+  const handleNoteTitleChange = (e) => {
+    setNoteTitle(e.target.value)
+    setUpdatedNoteTitle(e.target.value)
+    // console.log(e.target.value)
+  }
+
   const useStyles = makeStyles((theme) => ({
-    root: {
-      padding: '2px 4px',
-      display: 'flex',
-      alignItems: 'center',
-      width: 400,
-    },
     input: {
       marginLeft: theme.spacing(0),
       flex: 1,
-    },
-    iconButton: {
-      padding: 10,
-    },
-    divider: {
-      height: 28,
-      margin: 4,
     },
   }));
 
@@ -139,12 +137,20 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
       {(note !== null) ? <textarea value={noteContent} onChange={handleNoteContentChange}></textarea> : ""}
       {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""} */}
 
-      <InputBase
+      {/* <InputBase
         className={classes.input}
         fullWidth={true}
-        placeholder="Title"
-        inputProps={{ 'aria-label': note[0].title }}
-      />
+        defaultValue={noteTitle}
+        inputProps={{ 'aria-label': "note title" }}
+        // placeholder="Title"
+      /> */}
+
+      <InputBase
+        id="noteTitleInput"
+        fullWidth={true}
+        value={noteTitle}
+        onChange={handleNoteTitleChange}>
+      </InputBase>
 
       <ReactQuill
         modules={RQModules}

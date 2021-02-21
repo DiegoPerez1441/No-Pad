@@ -23,6 +23,7 @@ const Dashboard = ( { email } ) => {
   const [selectedNote, setSelectedNote] = useState(null)
   const [selectedNoteId, setSelectedNoteId] = useState(null)
   
+  const [updatedNoteTitle, setUpdatedNoteTitle] = useState(null)
   const [updatedNote, setUpdatedNote] = useState(null)
 
   const [snackBarToggle_ND, setSnackBarToggle_ND] = useState(false)
@@ -109,10 +110,11 @@ const Dashboard = ( { email } ) => {
         .doc(email)
         .collection('notes')
         .doc(selectedNoteId).set({
+          title: updatedNoteTitle,
           body: updatedNote
         }, {merge: true})
     }
-  }, [updatedNote])
+  }, [updatedNoteTitle, updatedNote])
 
   // Removed <body> since there is already a body in the root HTML document
   return(
@@ -133,7 +135,7 @@ const Dashboard = ( { email } ) => {
         {(selectedNote === null) ? (
           <EmptyNote/>
         ) : (
-          <Note className='Note' note={selectedNote} setUpdatedNote={setUpdatedNote}/>
+          <Note className='Note' note={selectedNote} setUpdatedNoteTitle={setUpdatedNoteTitle} setUpdatedNote={setUpdatedNote}/>
         )}
 
       </div>
