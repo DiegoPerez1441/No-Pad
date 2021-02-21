@@ -5,7 +5,7 @@ import {
   insertNewNoteForUser
 } from '../utils/localStorageUtils'
 
-const SideNav = ( { user, notes, fetchLatestNotes } ) => {
+const SideNav = ( { createNewNote, user, notes, fetchLatestNotes } ) => {
 
   const [newNoteMenuOpen, setNewNoteMenuOpen] = useState(false)
 
@@ -36,9 +36,11 @@ const SideNav = ( { user, notes, fetchLatestNotes } ) => {
 
   const handleButtonClick = useCallback((e) => {
     e.preventDefault();
-    if(isInputFilled){
-      insertNewNoteForUser(user, noteName, "")
-      fetchLatestNotes()
+    if(isInputFilled) {
+      createNewNote(noteName)
+
+      // insertNewNoteForUser(user, noteName, "")
+      // fetchLatestNotes()
       closeNewNoteMenu()
     }
   }, [user, noteName, fetchLatestNotes, isInputFilled])

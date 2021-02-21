@@ -21,6 +21,18 @@ const Dashboard = ( { email } ) => {
   
   const [updatedNote, setUpdatedNote] = useState(null)
 
+  const createNewNote = (noteName) => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(email)
+      .collection('notes')
+      .add({
+        title: noteName,
+        body: ""
+      })
+  }
+
   const selectNote = (_id) => {
     const s_note = notes.filter((i) => _id === i.id)
     setSelectedNote(s_note)
@@ -83,7 +95,7 @@ const Dashboard = ( { email } ) => {
         <Overview className='Overview' user={user} notes={notes} note={note} setNote={setNote} fetchLatestNotes={fetchLatestNotes}/>
         <Note className='Note' user={user} note={note} fetchLatestNotes={fetchLatestNotes}/>
       </div> */}
-      <SideNav className='sidenav'/>
+      <SideNav className='sidenav' createNewNote={createNewNote}/>
       <div className='grid-container'>
         <Overview className='Overview' notes={notes} selectedNoteId={selectedNoteId} selectNote={selectNote}/>
         
