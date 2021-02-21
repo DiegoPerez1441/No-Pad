@@ -7,6 +7,9 @@ import debounce from '../helpers'
 // import '../manage';
 import '../style/style-dashboard.css';
 import { getAllNotesForUser } from '../utils/localStorageUtils';
+
+import SnackBarMessage from '../utils/SnackBarMessage'
+
 const firebase = require('firebase')
 
 const Dashboard = ( { email } ) => {
@@ -22,6 +25,9 @@ const Dashboard = ( { email } ) => {
   
   const [updatedNote, setUpdatedNote] = useState(null)
 
+  const [snackBarActive, setSnackBarActive] = useState(false)
+  const [snackBarMessage, setSnackBarMessage] = useState('')
+
   const createNewNote = (noteName) => {
     firebase
       .firestore()
@@ -32,6 +38,8 @@ const Dashboard = ( { email } ) => {
         title: noteName,
         body: ""
       })
+
+      updateSnackBarMessage(true, "Note Created")
   }
 
   const deleteNote = (noteId) => {
@@ -47,6 +55,8 @@ const Dashboard = ( { email } ) => {
       .collection('notes')
       .doc(noteId).delete()
       
+    updateSnackBarMessage(true, "Note Deleted")
+
     console.log("Note Deleted | Id: " + noteId)
   }
 
@@ -104,10 +114,23 @@ const Dashboard = ( { email } ) => {
     }
   }, [updatedNote])
 
+  // Create an array of SB messaged and cycle through them at a constant interval or make new SB objects for each message
+  const updateSnackBarMessage = (active, message) => {
+    setSnackBarActive(active)
+    setSnackBarMessage(message)
+  }
+
+  const resetSnackBarMessage = () => {
+    setSnackBarActive(false)
+    setSnackBarMessage('')
+  }
 
   // Removed <body> since there is already a body in the root HTML document
   return(
     <>
+
+      <SnackBarMessage message={snackBarMessage} active={snackBarActive}/>
+
       {/* <SideNav className='sidenav' user={user} notes={notes} fetchLatestNotes={fetchLatestNotes}/>
       <div className='grid-container'>
         <Overview className='Overview' user={user} notes={notes} note={note} setNote={setNote} fetchLatestNotes={fetchLatestNotes}/>

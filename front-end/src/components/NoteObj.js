@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { removeHTMLTags } from '../helpers'
 import { deleteNoteForUser } from '../utils/localStorageUtils'
@@ -14,7 +14,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 const NoteObj = ({ note, selectedNoteId, selectNote, deleteNote }) => {
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -30,20 +30,6 @@ const NoteObj = ({ note, selectedNoteId, selectNote, deleteNote }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  // const selectNote = () => {
-  //   // setNote(note)
-  //   // console.log(note.id + " - Note Selected")
-
-
-  // }
-
-  // const deleteNote = () => {
-  //   // deleteNoteForUser({ ...note })
-  //   // setNote(null)
-  //   // fetchLatestNotes()
-  //   // console.log(note.id + " - Info Pressed")
-  // }
 
   const handleDeleteNote = () => {
     handleClose()
