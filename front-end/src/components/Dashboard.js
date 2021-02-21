@@ -73,6 +73,7 @@ const Dashboard = ( { email } ) => {
       })
   }, [])
 
+  // Update Firebase Firestore
   useEffect(() => {
     if (updatedNote != null) {
       firebase
@@ -82,7 +83,7 @@ const Dashboard = ( { email } ) => {
         .collection('notes')
         .doc(selectedNoteId).set({
           body: updatedNote
-        })
+        }, {merge: true})
     }
   }, [updatedNote])
 
