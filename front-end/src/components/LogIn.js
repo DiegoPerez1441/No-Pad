@@ -87,12 +87,12 @@ const LogIn = ({
 
         <form>
           <label htmlFor="mail">Email Address</label>
-          <input type="email" id="mail" name="user_email" value={email} onChange={handleEmailChange}/>
+          <input type="email" id="mail" name="user_email" value={email} onChange={handleEmailChange} className="custom-loginUI"/>
           {/* Pattern for only rendering some JSX whenever a condition is true: */}
           {isEmailWrong && <div className="login-error-mess">Email not found</div>}
 
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="user_password" value={password} onChange={handlePasswordChange}/>
+          <input type="password" id="password" name="user_password" value={password} onChange={handlePasswordChange} className="custom-loginUI"/>
           {isPasswordWrong && <div className="login-error-mess">Invalid password</div>}
 
           <button 

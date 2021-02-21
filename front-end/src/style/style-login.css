@@ -181,7 +181,7 @@ label {
   padding: 10px 0 !important;
 }
 
-input, textarea {
+.custom-loginUI, textarea {
   width: 100%;
   height: 40px;
 
@@ -195,7 +195,7 @@ input, textarea {
   transition: all 0.25s;
   box-sizing: border-box;
 }
-input:focus, textarea:focus {
+.custom-loginUI:focus, textarea:focus {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
