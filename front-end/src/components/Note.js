@@ -7,13 +7,17 @@ const Note = ( { note, fetchLatestNotes } ) => {
 
   const [id, setId] = useState('')
   const [title, setTitle] = useState('')
-  const [text, setText] = useState('')
+  // const [text, setText] = useState('')
 
   const [noteContent, setNoteContent] = useState("")
 
   // useEffect(() => {
   //   note !== null && setNoteContent(note.content)
   // }, [note])
+
+  useEffect(() => {
+    console.log(noteContent)
+  }, [noteContent])
 
   const handleNoteContentChange = (e) => {
     const newNoteContent = e.target.value
@@ -31,11 +35,39 @@ const Note = ( { note, fetchLatestNotes } ) => {
     console.log("Updating database")
   }, 1500)
 
-  const updateBody = async (val) => {
-    await setText(val)
+  const RQOnChange = debounce((content, delta, source, editor) => {
+    setNoteContent(editor.getHTML())
+    // console.log(editor.getHTML()); // rich text
+		// console.log(editor.getText()); // plain text
+		// console.log(editor.getLength()); // number of characters
+  }, 1000)
 
-    update()
-  }
+  // const updateBody = async (val) => {
+  //   await setText(val)
+
+  //   update()
+  // }
+
+  const RQModules = {
+    toolbar: [
+        [{ 'font': [] }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        [{ 'align': [] }],
+        [{ 'color': [] }, { 'background': [] }],
+        ['clean']
+      ]
+  };
+
+  const RQFormats = [
+    'font',
+    'size',
+    'bold', 'italic', 'underline',
+    'list', 'bullet',
+    'align',
+    'color', 'background'
+  ];
 
   return(
     <div className="noteEditorContainer">
@@ -44,8 +76,10 @@ const Note = ( { note, fetchLatestNotes } ) => {
       {(note !== null) ? <button type="submit" onClick={updateNote} className="button_form">Submit</button> : ""} */}
 
       <ReactQuill
-        value={text}
-        onChange={updateBody}>
+        formats={RQFormats}
+        // modules={RQModules}
+        value={noteContent}
+        onChange={RQOnChange}>
       </ReactQuill>
 
     </div>
