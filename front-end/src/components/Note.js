@@ -117,6 +117,10 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
 
   // Controlled component
   const handleNoteTitleChange = (e) => {
+    /* signal to React not to nullify the event object */
+    // https://medium.com/@anuhosad/debouncing-events-with-react-b8c405c33273
+    // e.persist();
+
     setNoteTitle(e.target.value)
     setUpdatedNoteTitle(e.target.value)
     // console.log(e.target.value)
