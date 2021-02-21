@@ -3,6 +3,7 @@ import SideNav from './SideNav';
 import Note from './Note';
 import EmptyNote from './EmptyNote';
 import Overview from './Overview';
+import debounce from '../helpers'
 // import '../manage';
 import '../style/style-dashboard.css';
 import { getAllNotesForUser } from '../utils/localStorageUtils';
@@ -31,6 +32,22 @@ const Dashboard = ( { email } ) => {
         title: noteName,
         body: ""
       })
+  }
+
+  const deleteNote = (noteId) => {
+    
+    // Reset React Quill Editor
+    setSelectedNoteId(null)
+    setSelectedNote(null)
+    
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(email)
+      .collection('notes')
+      .doc(noteId).delete()
+      
+    console.log("Note Deleted | Id: " + noteId)
   }
 
   const selectNote = (_id) => {
@@ -98,7 +115,7 @@ const Dashboard = ( { email } ) => {
       </div> */}
       <SideNav className='sidenav' createNewNote={createNewNote}/>
       <div className='grid-container'>
-        <Overview className='Overview' notes={notes} selectedNoteId={selectedNoteId} selectNote={selectNote}/>
+        <Overview className='Overview' notes={notes} selectedNoteId={selectedNoteId} selectNote={selectNote} deleteNote={deleteNote}/>
         
         {(selectedNote === null) ? (
           <EmptyNote/>

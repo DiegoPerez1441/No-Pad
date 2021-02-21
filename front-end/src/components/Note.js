@@ -51,7 +51,7 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNote } ) => {
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
 		// console.log(editor.getLength()); // number of characters
-  }, 3000)
+  }, 1500)
 
   // const updateBody = async (val) => {
   //   await setText(val)

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { removeHTMLTags } from '../helpers'
 import { deleteNoteForUser } from '../utils/localStorageUtils'
 
-const NoteObj = ({ note, selectedNoteId, selectNote }) => {
+const NoteObj = ({ note, selectedNoteId, selectNote, deleteNote }) => {
 
   // const selectNote = () => {
   //   // setNote(note)
@@ -12,11 +12,20 @@ const NoteObj = ({ note, selectedNoteId, selectNote }) => {
 
   // }
 
-  const deleteNote = () => {
-    // deleteNoteForUser({ ...note })
-    // setNote(null)
-    // fetchLatestNotes()
-    // console.log(note.id + " - Info Pressed")
+  // const deleteNote = () => {
+  //   // deleteNoteForUser({ ...note })
+  //   // setNote(null)
+  //   // fetchLatestNotes()
+  //   // console.log(note.id + " - Info Pressed")
+  // }
+
+  const handleDeleteNote = (e) => {
+    // https://stackoverflow.com/questions/2385113/howto-div-with-onclick-inside-another-div-with-onclick-javascript
+    if (!e) var e = window.event;
+    e.cancelBubble = true;
+    if (e.stopPropagation) e.stopPropagation();
+
+    deleteNote(note.id)
   }
 
   return(
@@ -27,7 +36,7 @@ const NoteObj = ({ note, selectedNoteId, selectNote }) => {
         {/* <h6>{note.id}</h6> */}
         {/* <h6>{note.lastModified}</h6> */}
       </div>
-      <div className="NoteObjInfo" onClick={deleteNote}>
+      <div className="NoteObjInfo" onClick={handleDeleteNote}>
         <FontAwesomeIcon icon={['fas', 'trash']} className="sidenav-icon"/>
         {/* <span>•</span>
         <span>•</span>
