@@ -13,20 +13,21 @@ import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import { TextField } from '@material-ui/core';
 
+import Container from '@material-ui/core/Container';
+import CachedIcon from '@material-ui/icons/Cached';
+
 // Load the lodash full build
 var _ = require('lodash');
 
-const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } ) => {
+const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
 
   const [id, setId] = useState('')
   const [noteTitle, setNoteTitle] = useState('')
   // const [text, setText] = useState('')
 
-  const [noteContent, setNoteContent] = useState("")
+  const [saving_title, setSaving_title] = useState(false)
 
-  // useEffect(() => {
-  //   note !== null && setNoteContent(note.content)
-  // }, [note])
+  const [noteContent, setNoteContent] = useState("")
 
   useEffect(() => {
     if (note === null) {
@@ -49,11 +50,12 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
     setNoteContent(newNoteContent)
   }
 
-  const updateNote = useCallback((e) => {
-    e.preventDefault();
-    updateNoteForUser({ ...note, content: noteContent })
-    fetchLatestNotes()
-  }, [note, noteContent, fetchLatestNotes])
+  // Localstorage
+  // const updateNote = useCallback((e) => {
+  //   e.preventDefault();
+  //   updateNoteForUser({ ...note, content: noteContent })
+  //   fetchLatestNotes()
+  // }, [note, noteContent, fetchLatestNotes])
 
   // const update = debounce(() => {
   //   // Come back later
@@ -69,11 +71,48 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
 		// console.log(editor.getLength()); // number of characters
   }, 1000)
 
+  const handleRQOnChange = (content, delta, source, editor) => {
+    RQOnChange(content, delta, source, editor)
+    // setSaving(true)
+  }
+
   // const updateBody = async (val) => {
   //   await setText(val)
 
   //   update()
   // }
+
+  // const updateNoteTitleChange = _.debounce((value) => {
+  //   // setNoteTitle(value)
+  //   setUpdatedNoteTitle(value)
+  //   // console.log(event.target.value)
+  // }, 1000)
+
+  // // Controlled component
+  // const handleNoteTitleChange = (event) => {
+  //   /* signal to React not to nullify the event object */
+  //   // https://medium.com/@anuhosad/debouncing-events-with-react-b8c405c33273
+  //   // event.persist()
+
+  //   let value = event.target.value
+  //   setNoteTitle(value)
+  //   // setUpdatedNoteTitle(value)
+  //   updateNoteTitleChange(value)
+
+  // }
+
+  // https://rajeshnaroth.medium.com/using-throttle-and-debounce-in-a-react-function-component-5489fc3461b3
+  const updateNoteTitleChange = useCallback(_.debounce((value) => {
+    setUpdatedNoteTitle(value)
+    setSaving_title(false)
+  }, 1000), [])
+
+  // Controlled component
+  const handleNoteTitleChange = (event) => {
+    setNoteTitle(event.target.value)
+    updateNoteTitleChange(event.target.value)
+    setSaving_title(true)
+  }
 
   const RQModules = {
     toolbar: [
@@ -118,38 +157,20 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
     'color', 'background'
   ];
 
-  // const updateNoteTitleChange = _.debounce((value) => {
-  //   // setNoteTitle(value)
-  //   setUpdatedNoteTitle(value)
-  //   // console.log(event.target.value)
-  // }, 1000)
-
-  // // Controlled component
-  // const handleNoteTitleChange = (event) => {
-  //   /* signal to React not to nullify the event object */
-  //   // https://medium.com/@anuhosad/debouncing-events-with-react-b8c405c33273
-  //   // event.persist()
-
-  //   let value = event.target.value
-  //   setNoteTitle(value)
-  //   // setUpdatedNoteTitle(value)
-  //   updateNoteTitleChange(value)
-
-  // }
-
-  // https://rajeshnaroth.medium.com/using-throttle-and-debounce-in-a-react-function-component-5489fc3461b3
-  const updateNoteTitleChange = useCallback(_.debounce(value => setUpdatedNoteTitle(value), 1000), [])
-
-  // Controlled component
-  const handleNoteTitleChange = (event) => {
-    setNoteTitle(event.target.value)
-    updateNoteTitleChange(event.target.value)
-  }
-
   const useStyles = makeStyles((theme) => ({
+    root: {
+      padding: '2px 4px',
+      display: 'flex',
+      alignItems: 'center',
+      // width: 400,
+    },
     input: {
       marginLeft: theme.spacing(0),
       flex: 1,
+    },
+    divider: {
+      height: 28,
+      margin: 4,
     },
   }));
 
@@ -169,13 +190,27 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
         // placeholder="Title"
       /> */}
 
-      <InputBase
-        id="noteTitleInput"
-        fullWidth={true}
-        value={noteTitle}
-        placeholder="Note Title"
-        onChange={handleNoteTitleChange}>
-      </InputBase>
+      <Container maxWidth="sm" className={classes.root}>
+
+        <InputBase
+          id="noteTitleInput"
+          fullWidth={true}
+          value={noteTitle}
+          placeholder="Note Title"
+          onChange={handleNoteTitleChange}>
+        </InputBase>
+
+        {/* <Divider className={classes.divider} orientation="vertical" /> */}
+
+        {saving_title && (
+          <>
+            <CachedIcon color="disabled" fontSize="small" />
+            <p style={{color: "#00000042"}}>Saving...</p>
+          </>
+        )}
+
+      </Container>
+
 
       <ReactQuill
         modules={RQModules}
