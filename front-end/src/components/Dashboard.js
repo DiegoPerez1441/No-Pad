@@ -101,7 +101,7 @@ const Dashboard = ( { email } ) => {
       })
   }, [])
 
-  // Update Firebase Firestore
+  // Update Firebase Firestore note title and body separately
   useEffect(() => {
     if (updatedNote != null) {
       firebase
@@ -111,10 +111,22 @@ const Dashboard = ( { email } ) => {
         .collection('notes')
         .doc(selectedNoteId).set({
           title: updatedNoteTitle,
+        }, {merge: true})
+    }
+  }, [updatedNoteTitle])
+
+  useEffect(() => {
+    if (updatedNote != null) {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(email)
+        .collection('notes')
+        .doc(selectedNoteId).set({
           body: updatedNote
         }, {merge: true})
     }
-  }, [updatedNoteTitle, updatedNote])
+  }, [updatedNote])
 
   // Removed <body> since there is already a body in the root HTML document
   return(
