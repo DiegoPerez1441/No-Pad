@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import ReactQuill from 'react-quill'
-import debounce from '../helpers'
+// import debounce from '../helpers'
 import { updateNoteForUser } from '../utils/localStorageUtils'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +12,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import { TextField } from '@material-ui/core';
+
+// Load the lodash full build
+var _ = require('lodash');
 
 const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } ) => {
 
@@ -57,14 +60,14 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
   //   console.log("Updating database")
   // }, 1500)
 
-  const RQOnChange = debounce((content, delta, source, editor) => {
+  const RQOnChange = _.debounce((content, delta, source, editor) => {
     setNoteContent(editor.getHTML())
     setUpdatedNote(editor.getHTML())
     // console.log("Note Updated")
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
 		// console.log(editor.getLength()); // number of characters
-  }, 1500)
+  }, 1000)
 
   // const updateBody = async (val) => {
   //   await setText(val)
@@ -115,15 +118,32 @@ const Note = ( { note, fetchLatestNotes, setUpdatedNoteTitle, setUpdatedNote } )
     'color', 'background'
   ];
 
-  // Controlled component
-  const handleNoteTitleChange = (e) => {
-    /* signal to React not to nullify the event object */
-    // https://medium.com/@anuhosad/debouncing-events-with-react-b8c405c33273
-    // e.persist();
+  // const updateNoteTitleChange = _.debounce((value) => {
+  //   // setNoteTitle(value)
+  //   setUpdatedNoteTitle(value)
+  //   // console.log(event.target.value)
+  // }, 1000)
 
-    setNoteTitle(e.target.value)
-    setUpdatedNoteTitle(e.target.value)
-    // console.log(e.target.value)
+  // // Controlled component
+  // const handleNoteTitleChange = (event) => {
+  //   /* signal to React not to nullify the event object */
+  //   // https://medium.com/@anuhosad/debouncing-events-with-react-b8c405c33273
+  //   // event.persist()
+
+  //   let value = event.target.value
+  //   setNoteTitle(value)
+  //   // setUpdatedNoteTitle(value)
+  //   updateNoteTitleChange(value)
+
+  // }
+
+  // https://rajeshnaroth.medium.com/using-throttle-and-debounce-in-a-react-function-component-5489fc3461b3
+  const updateNoteTitleChange = useCallback(_.debounce(value => setUpdatedNoteTitle(value), 1000), [])
+
+  // Controlled component
+  const handleNoteTitleChange = (event) => {
+    setNoteTitle(event.target.value)
+    updateNoteTitleChange(event.target.value)
   }
 
   const useStyles = makeStyles((theme) => ({
