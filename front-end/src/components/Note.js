@@ -26,6 +26,7 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
   // const [text, setText] = useState('')
 
   const [saving_title, setSaving_title] = useState(false)
+  const [saving_note, setSaving_note] = useState(false)
 
   const [noteContent, setNoteContent] = useState("")
 
@@ -62,9 +63,21 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
   //   console.log("Updating database")
   // }, 1500)
 
+  const set_setSaving_note = (state) => {
+    setSaving_note(state)
+  }
+
   const RQOnChange = _.debounce((content, delta, source, editor) => {
-    setNoteContent(editor.getHTML())
-    setUpdatedNote(editor.getHTML())
+
+    if (source == "api") {
+      console.log("An API call for React Quill update hasd been called")
+    } else if (source == 'user') {
+      setNoteContent(editor.getHTML())
+      setUpdatedNote(editor.getHTML())
+      console.log("A user action for React Quill update hasd been called")
+    }
+
+    // setSaving_note(false)
     // console.log("Note Updated")
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
@@ -73,7 +86,7 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
 
   const handleRQOnChange = (content, delta, source, editor) => {
     RQOnChange(content, delta, source, editor)
-    // setSaving(true)
+    // setSaving_note(true)
   }
 
   // const updateBody = async (val) => {
@@ -216,7 +229,8 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
         modules={RQModules}
         // formats={RQFormats}
         value={noteContent}
-        onChange={RQOnChange}>
+        // onChange={RQOnChange}>
+        onChange={handleRQOnChange}>
       </ReactQuill>
 
     </div>
