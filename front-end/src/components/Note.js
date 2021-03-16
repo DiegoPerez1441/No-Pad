@@ -28,6 +28,8 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
   const [saving_title, setSaving_title] = useState(false)
   const [saving_note, setSaving_note] = useState(false)
 
+  const [blockReactQuillFIrstAPIChange, setBlockReactQuillFIrstAPIChange] = useState(false)
+
   const [noteContent, setNoteContent] = useState("")
 
   useEffect(() => {
@@ -63,21 +65,20 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
   //   console.log("Updating database")
   // }, 1500)
 
-  const set_setSaving_note = (state) => {
-    setSaving_note(state)
-  }
-
   const RQOnChange = _.debounce((content, delta, source, editor) => {
 
     if (source == "api") {
-      console.log("An API call for React Quill update hasd been called")
-    } else if (source == 'user') {
+      console.log("An API call for React Quill update has been called")
+    } else if (source == "user") {
       setNoteContent(editor.getHTML())
       setUpdatedNote(editor.getHTML())
-      console.log("A user action for React Quill update hasd been called")
+      console.log("An user action for React Quill update has been called")
+
+      // setSaving_note(false)
     }
 
-    // setSaving_note(false)
+    setSaving_note(false)
+
     // console.log("Note Updated")
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
@@ -85,8 +86,29 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
   }, 1000)
 
   const handleRQOnChange = (content, delta, source, editor) => {
-    RQOnChange(content, delta, source, editor)
+    // RQOnChange(content, delta, source, editor)
     // setSaving_note(true)
+
+    RQOnChange(content, delta, source, editor)
+    if (source == "user") {
+      setSaving_note(true)
+    }
+    
+    // if (source == "api") {
+    //   setSaving_note(true)
+    // }
+
+
+
+    // Block React Quill's first API call
+    // if (source == "api" && !blockReactQuillFIrstAPIChange) {
+    //   setBlockReactQuillFIrstAPIChange(true)
+    //   console.log("Blocked React Quill's first API call")
+    // } else {
+    //   RQOnChange(content, delta, source, editor)
+    //   // setSaving_note(true)
+    // }
+    
   }
 
   // const updateBody = async (val) => {
@@ -215,7 +237,7 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
 
         {/* <Divider className={classes.divider} orientation="vertical" /> */}
 
-        {saving_title && (
+        {(saving_title || saving_note) && (
           <>
             <CachedIcon color="disabled" fontSize="small" />
             <p style={{color: "#00000042"}}>Saving...</p>
