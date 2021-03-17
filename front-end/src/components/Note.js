@@ -39,7 +39,7 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
     } else {
       setNoteTitle(note[0].title)
       setNoteContent(note[0].body)
-      // console.log("Note: " + note[0])
+      // console.log("Note: " + note[0].body)
     }
   }, [note])
 
