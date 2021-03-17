@@ -65,7 +65,7 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
   //   console.log("Updating database")
   // }, 1500)
 
-  const RQOnChange = _.debounce((content, delta, source, editor) => {
+  const RQOnChange = useCallback(_.debounce((content, delta, source, editor) => {
 
     if (source == "api") {
       console.log("An API call for React Quill update has been called")
@@ -83,7 +83,7 @@ const Note = ( { note, setUpdatedNoteTitle, setUpdatedNote } ) => {
     // console.log(editor.getHTML()); // rich text
 		// console.log(editor.getText()); // plain text
 		// console.log(editor.getLength()); // number of characters
-  }, 1000)
+  }, 1000), [])
 
   const handleRQOnChange = (content, delta, source, editor) => {
     // RQOnChange(content, delta, source, editor)
